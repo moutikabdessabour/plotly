@@ -614,7 +614,17 @@ to_basic.GeomQuantile <- function(data, prestats_data, layout, params, p, ...){
 }
 
 #' @export
+to_basic.GeomDl <- function(data, ...){
+  print(nrow(data))
+  data <- data[order(data$x, decreasing = TRUE),]
+  data = do.call(rbind, lapply(split(data, data$label), `[`, 1, ))
+  prefix_class(data, "GeomText")
+}
+
+
+#' @export
 to_basic.default <- function(data, prestats_data, layout, params, p, ...) {
+  print(list(class = class(data), head = head(data), names = names(data)))
   data
 }
 
